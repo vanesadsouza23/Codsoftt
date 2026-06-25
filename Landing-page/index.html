@@ -1,1 +1,420 @@
-<h1>hi hello </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flowly – Get More Done</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:    #0D9488;
+      --teal-dk: #0A7C72;
+      --teal-lt: #CCFBF1;
+      --dark:    #0F172A;
+      --mid:     #475569;
+      --light:   #F8FAFC;
+      --white:   #FFFFFF;
+      --border:  #E2E8F0;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--dark); font-size: 16px; line-height: 1.6; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 7%;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--teal); text-decoration: none; }
+    .logo span { color: var(--dark); }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a { color: var(--mid); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-cta { background: var(--teal); color: var(--white) !important; padding: 9px 20px; border-radius: 8px; transition: background 0.2s !important; }
+    .nav-cta:hover { background: var(--teal-dk) !important; }
+
+    /* HERO */
+    .hero {
+      padding: 100px 7% 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      background: linear-gradient(160deg, #f0fdfa 0%, #ffffff 60%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--teal-lt); color: var(--teal);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.5px;
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 24px;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.6rem; }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    h1 span { color: var(--teal); }
+    .hero p { color: var(--mid); font-size: 1.05rem; max-width: 460px; margin-bottom: 36px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 13px 26px; border-radius: 9px; font-size: 0.92rem; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+    .btn-primary { background: var(--teal); color: var(--white); }
+    .btn-primary:hover { background: var(--teal-dk); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13,148,136,0.25); }
+    .btn-ghost { background: transparent; color: var(--dark); border: 1.5px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* APP MOCKUP */
+    .hero-visual {
+      background: var(--dark);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 24px 60px rgba(15,23,42,0.18);
+    }
+    .mockup-bar { display: flex; gap: 7px; margin-bottom: 20px; }
+    .mockup-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .mockup-dot:nth-child(1) { background: #FF5F57; }
+    .mockup-dot:nth-child(2) { background: #FFBD2E; }
+    .mockup-dot:nth-child(3) { background: #28CA41; }
+    .mockup-title { color: #94A3B8; font-size: 0.78rem; margin-bottom: 16px; font-weight: 500; }
+    .task-item {
+      display: flex; align-items: center; gap: 12px;
+      background: #1E293B; border-radius: 8px; padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .task-check {
+      width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--teal);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .task-check.done { background: var(--teal); border-color: var(--teal); }
+    .task-check.done::after { content: '✓'; color: white; font-size: 10px; font-weight: 700; }
+    .task-text { color: #E2E8F0; font-size: 0.85rem; }
+    .task-text.done { color: #64748B; text-decoration: line-through; }
+    .task-tag { margin-left: auto; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+    .tag-work { background: rgba(13,148,136,0.2); color: var(--teal); }
+    .tag-personal { background: rgba(139,92,246,0.2); color: #8B5CF6; }
+    .tag-urgent { background: rgba(239,68,68,0.2); color: #EF4444; }
+
+    /* LOGOS */
+    .logos { padding: 40px 7%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; }
+    .logos p { font-size: 0.8rem; color: var(--mid); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px; }
+    .logo-row { display: flex; justify-content: center; align-items: center; gap: 48px; flex-wrap: wrap; }
+    .logo-item { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: #CBD5E1; }
+
+    /* FEATURES */
+    .features { padding: 90px 7%; background: var(--light); }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+    .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; color: var(--dark); margin-bottom: 12px; }
+    .section-sub { color: var(--mid); max-width: 480px; margin-bottom: 50px; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .feature-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 24px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-3px); }
+    .feature-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .feature-card p { font-size: 0.87rem; color: var(--mid); }
+
+    /* HOW IT WORKS */
+    .how { padding: 90px 7%; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 50px; }
+    .step { text-align: center; padding: 0 16px; }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--teal-lt); color: var(--teal);
+      font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .step h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .step p { font-size: 0.87rem; color: var(--mid); }
+
+    /* PRICING */
+    .pricing { padding: 90px 7%; background: var(--light); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 50px; }
+    .price-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 32px 28px;
+    }
+    .price-card.popular {
+      background: var(--dark); border-color: var(--dark);
+      transform: scale(1.03);
+    }
+    .popular-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--teal); background: var(--teal-lt); padding: 4px 10px; border-radius: 4px; display: inline-block; margin-bottom: 16px; }
+    .price-card h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .price-card.popular h3 { color: var(--white); }
+    .price { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; color: var(--dark); margin: 12px 0 4px; }
+    .price-card.popular .price { color: var(--white); }
+    .price span { font-size: 1rem; font-weight: 400; color: var(--mid); }
+    .price-card.popular .price span { color: #94A3B8; }
+    .price-desc { font-size: 0.83rem; color: var(--mid); margin-bottom: 24px; }
+    .price-card.popular .price-desc { color: #94A3B8; }
+    .price-features { list-style: none; margin-bottom: 28px; }
+    .price-features li { font-size: 0.85rem; color: var(--mid); padding: 6px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+    .price-card.popular .price-features li { color: #CBD5E1; border-color: #1E293B; }
+    .price-features li::before { content: '✓'; color: var(--teal); font-weight: 700; font-size: 0.8rem; }
+    .btn-dark { background: var(--white); color: var(--dark); }
+    .btn-dark:hover { background: var(--teal-lt); color: var(--teal); }
+
+    /* CTA BANNER */
+    .cta-banner {
+      padding: 80px 7%; text-align: center;
+      background: var(--dark);
+    }
+    .cta-banner h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: var(--white); margin-bottom: 14px; }
+    .cta-banner p { color: #94A3B8; margin-bottom: 32px; font-size: 1rem; }
+    .cta-input { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .cta-input input {
+      padding: 13px 18px; border-radius: 9px; border: 1px solid #334155;
+      background: #1E293B; color: var(--white); font-size: 0.9rem;
+      font-family: 'Inter', sans-serif; outline: none; width: 280px;
+    }
+    .cta-input input::placeholder { color: #64748B; }
+    .cta-input input:focus { border-color: var(--teal); }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 7%;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-logo { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--teal); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.83rem; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--teal); }
+    footer p { font-size: 0.82rem; color: var(--mid); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 14px 5%; }
+      .nav-links { gap: 16px; }
+      .hero { grid-template-columns: 1fr; padding: 60px 5% 50px; gap: 40px; }
+      .features { padding: 60px 5%; }
+      .features-grid { grid-template-columns: 1fr; }
+      .how { padding: 60px 5%; }
+      .steps { grid-template-columns: 1fr; gap: 28px; }
+      .pricing { padding: 60px 5%; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .price-card.popular { transform: none; }
+      .cta-banner { padding: 60px 5%; }
+      footer { flex-direction: column; text-align: center; padding: 32px 5%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">flow<span>ly</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#" class="nav-cta">Get Started Free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Now in public beta</div>
+    <h1>Focus on work,<br>not <span>managing</span> it.</h1>
+    <p>Flowly keeps your tasks, deadlines, and team in one place — so you can stop juggling apps and start getting things done.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn btn-primary">Start for free</a>
+      <a href="#how" class="btn btn-ghost">See how it works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="mockup-bar">
+      <div class="mockup-dot"></div>
+      <div class="mockup-dot"></div>
+      <div class="mockup-dot"></div>
+    </div>
+    <div class="mockup-title">My Tasks — Today</div>
+    <div class="task-item">
+      <div class="task-check done"></div>
+      <span class="task-text done">Review design mockups</span>
+      <span class="task-tag tag-work">Work</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check"></div>
+      <span class="task-text">Send project proposal</span>
+      <span class="task-tag tag-urgent">Urgent</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check"></div>
+      <span class="task-text">Team standup at 3pm</span>
+      <span class="task-tag tag-work">Work</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check done"></div>
+      <span class="task-text done">Buy groceries</span>
+      <span class="task-tag tag-personal">Personal</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check"></div>
+      <span class="task-text">Update portfolio website</span>
+      <span class="task-tag tag-personal">Personal</span>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos">
+  <p>Trusted by teams at</p>
+  <div class="logo-row">
+    <span class="logo-item">Notion</span>
+    <span class="logo-item">Vercel</span>
+    <span class="logo-item">Linear</span>
+    <span class="logo-item">Figma</span>
+    <span class="logo-item">Stripe</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <p class="section-label">Features</p>
+  <h2 class="section-title">Everything you need, nothing you don't</h2>
+  <p class="section-sub">Built for individuals and small teams who want clarity without complexity.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant capture</h3>
+      <p>Add tasks in seconds from anywhere — browser, mobile, or desktop. Never lose an idea again.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <h3>Smart scheduling</h3>
+      <p>Flowly suggests the best time to work on tasks based on your calendar and energy levels.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>Team collaboration</h3>
+      <p>Assign tasks, leave comments, and track progress together — all in real time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <h3>Smart reminders</h3>
+      <p>Get notified at the right moment, not just at arbitrary times. Context-aware alerts only.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Progress insights</h3>
+      <p>See how productive you've been this week, what slows you down, and where to improve.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>App integrations</h3>
+      <p>Connect with Slack, Google Calendar, Notion, and 40+ other tools you already use.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <p class="section-label">How it works</p>
+  <h2 class="section-title">Up and running in minutes</h2>
+  <p class="section-sub">No complicated setup. Just sign up and start moving.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Create your workspace</h3>
+      <p>Sign up free and set up your personal or team workspace in under 2 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Add your tasks</h3>
+      <p>Import from other apps or start fresh. Organise by project, priority, or due date.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Get things done</h3>
+      <p>Flowly keeps you focused. Check off tasks, track progress, and celebrate wins.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <p class="section-label">Pricing</p>
+  <h2 class="section-title">Simple, honest pricing</h2>
+  <p class="section-sub">Start free, upgrade when you're ready. No hidden fees.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Free</h3>
+      <div class="price">$0<span>/mo</span></div>
+      <p class="price-desc">Perfect for individuals just getting started.</p>
+      <ul class="price-features">
+        <li>Up to 20 tasks</li>
+        <li>1 workspace</li>
+        <li>Basic reminders</li>
+        <li>Mobile app access</li>
+      </ul>
+      <a href="#" class="btn btn-ghost" style="width:100%;text-align:center;">Get started</a>
+    </div>
+    <div class="price-card popular">
+      <span class="popular-tag">Most popular</span>
+      <h3>Pro</h3>
+      <div class="price">$9<span>/mo</span></div>
+      <p class="price-desc">For power users who want the full experience.</p>
+      <ul class="price-features">
+        <li>Unlimited tasks</li>
+        <li>5 workspaces</li>
+        <li>Smart scheduling</li>
+        <li>Progress insights</li>
+        <li>App integrations</li>
+      </ul>
+      <a href="#" class="btn btn-primary" style="width:100%;text-align:center;">Start free trial</a>
+    </div>
+    <div class="price-card">
+      <h3>Team</h3>
+      <div class="price">$19<span>/mo</span></div>
+      <p class="price-desc">For teams that need to move fast together.</p>
+      <ul class="price-features">
+        <li>Everything in Pro</li>
+        <li>Unlimited members</li>
+        <li>Team analytics</li>
+        <li>Priority support</li>
+      </ul>
+      <a href="#" class="btn btn-ghost" style="width:100%;text-align:center;">Contact sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Ready to get more done?</h2>
+  <p>Join 50,000+ people who use Flowly to take back their time.</p>
+  <div class="cta-input">
+    <input type="email" placeholder="Enter your email address"/>
+    <a href="#" class="btn btn-primary">Get early access</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">flowly</span>
+  <div class="footer-links">
+    <a href="#">Features</a>
+    <a href="#">Pricing</a>
+    <a href="#">Blog</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+  </div>
+  <p>&copy; 2025 Flowly. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
